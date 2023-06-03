@@ -8,4 +8,7 @@ git --git-dir=.envgit checkout master
 git --git-dir=.envgit pull
 git pull
 
-source .bashrc
+cd $HOME
+cp -r $SCRIPT_DIR/. $HOME/tmp
+
+rm -rf -- $SCRIPT_DIR
