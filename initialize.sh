@@ -8,4 +8,4 @@ git --git-dir=.envgit checkout master
 git --git-dir=.envgit pull
 git pull
 
-source ./bashrc
+source .bashrc
