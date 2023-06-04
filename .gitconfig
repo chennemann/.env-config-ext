@@ -1,0 +1,5 @@
+[core]
+	autocrls = true
+[user]
+	name = Christoph Hennemann
+	email = christoph.hennemann@gmail.com
