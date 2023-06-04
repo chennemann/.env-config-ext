@@ -78,7 +78,7 @@ alias prod=connect-prod
 ####################################################################################################
 
 dericon() {
-   cd /d/development/dericon/$1
+   cd ${DERICON_ROOT}/$1
 }
 
 create-dericon-project-shortcuts() {
