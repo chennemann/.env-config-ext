@@ -16,3 +16,7 @@ alias fix=fix-permission
 
 alias explore="start ."
 alias explorer="start ."
+
+alias edit=editor
+
+alias ls="ls -a"
