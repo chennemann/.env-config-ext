@@ -11,6 +11,8 @@ git --git-dir=.envgit pull
 git pull
 git --git-dir=.envgit update-index --skip-worktree .gitignore
 git ls-files -z .envgit/ | xargs -0 git update-index --skip-worktree
+git update-index --skip-worktree initialize.sh
+git restore .gitignore
 
 cd $TARGET_DIR
 yes | cp -r $SCRIPT_DIR/. $TARGET_DIR
