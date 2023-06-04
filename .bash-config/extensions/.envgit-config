@@ -2,6 +2,7 @@
 
 alias envgit="git --git-dir=.envgit"
 alias syncRemote="git pull sync master"
+alias pushRemote="git push sync HEAD:master"
 
 update-env-config() {
     envgit pull
