@@ -1,6 +1,7 @@
 #!/bin/bash
 
 alias envgit="git --git-dir=.envgit"
+alias syncRemote="git pull sync master"
 
 update-env-config() {
     envgit pull
