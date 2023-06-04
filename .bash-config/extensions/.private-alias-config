@@ -1,0 +1,18 @@
+AC_ANDROID="studio.cmd"
+alias android=$AC_ANDROID
+alias studio=$AC_ANDROID
+
+chennemann() {
+   cd /d/development/chennemann/$1
+}
+alias private=chennemann
+
+
+# Alias to fix permission of the gradle wrapper in a given project
+function fix-permission() {
+   chmod +x ./gradlew
+}
+alias fix=fix-permission
+
+alias explore="start ."
+alias explorer="start ."

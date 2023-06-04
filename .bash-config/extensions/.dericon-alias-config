@@ -1,0 +1,289 @@
+####################################################################################################
+#
+#                USER SPECIFIC CONFIGURATION
+#
+####################################################################################################
+
+DERICON_ROOT="/d/Development/dericon"
+DERICON_COMMIT_EMAIL="christoph.hennemann@dericon.de"
+DERICON_COMMIT_NAME="chennemann"
+DERICON_SSH_HOST="work.bitbucket.org"
+
+
+
+
+####################################################################################################
+#
+#                INTEGRATION WITH WINDOWS TERMINAL -- SSH Server Connections
+#
+####################################################################################################
+
+open-wt-tab() {
+   COMMAND=$1
+   if [[ -n "$2" ]]; then 
+      TITLE="--title=$2 --suppressApplicationTitle"
+   else 
+      TITLE=""
+   fi
+   wt -w _quake $TITLE "C:\Program Files\Git\bin\bash.exe" -li -c $COMMAND
+}
+
+jenkins() {
+   open-wt-tab "${DERICON_ROOT}/cd-helpers/tools/build-jenkins/establish_ssh_tunnel_build_jenkins.sh" Jenkins
+}
+
+rundeck-cron() {
+   open-wt-tab "${DERICON_ROOT}/cd-helpers/tools/rundeck/establish_ssh_tunnel_rundeck_cron_prod.sh" Cron:PROD
+}
+alias cron=rundeck-cron
+
+rundeck-cron-test() {
+   open-wt-tab "${DERICON_ROOT}/cd-helpers/tools/rundeck/establish_ssh_tunnel_rundeck_cron_test.sh" Cron:TEST
+}
+alias cron-test=rundeck-cron-test
+
+rundeck() {
+   open-wt-tab "${DERICON_ROOT}/cd-helpers/tools/rundeck/establish_ssh_tunnel_rundeck_deployment.sh" Deployment
+}
+alias deploy=rundeck
+
+ssh_eureka() {
+   if [[ -n "$2" ]]; then 
+      PROJECT=$2;
+   else 
+      PROJECT=${PWD##*/};
+      PROJECT=${PROJECT:-/}
+   fi
+   wt --title="ssh > $PROJECT" --suppressApplicationTitle "C:\Program Files\Git\bin\bash.exe" -li -c "${DERICON_ROOT}/cd-helpers/tools/eureka-ssh-client/eureka-ssh-client.sh -e $1 -a $PROJECT"
+}
+
+connect() {   
+   ssh_eureka test $1
+}
+alias dev=connect
+
+connect-prod() {
+   ssh_eureka prod $1
+}
+alias prod=connect-prod
+
+
+
+
+
+####################################################################################################
+#
+#                PROJECT SHORTCUTS
+#
+####################################################################################################
+
+dericon() {
+   cd /d/development/dericon/$1
+}
+
+create-dericon-project-shortcuts() {
+    for path in ${DERICON_ROOT}/*/; do
+        if [ -d "$path" ]; then
+             local dirname=$path
+             local result="${dirname%"${dirname##*[!/]}"}"
+             result="${result##*/}"
+             result=${result:-/}
+             
+             alias $result="cd $path"
+        fi
+    done
+}
+create-dericon-project-shortcuts
+
+function open-ide() {
+   if [[ -n "$1" ]]; then
+      if [ -d "$1" ]; then
+         PROJECT_PATH=$1;
+      elif [ -d "${DERICON_ROOT}/$1" ]; then
+         PROJECT_PATH=${DERICON_ROOT}/$1
+      else
+         echo "‎$1: No such file or directory"
+         return
+      fi
+   elif [ "${PWD##$DERICON_ROOT}" != "$PWD" ]; then
+      slashCount=$(echo "$DERICON_ROOT" | tr -cd '/' | wc -c)
+      subDir=$(echo "$PWD" | cut -d'/' -f"$((slashCount + 2))")
+      PROJECT_PATH="$DERICON_ROOT/$subDir"
+   else
+      PROJECT_PATH="$PWD"
+   fi
+   echo "Open $PROJECT_PATH in configured IDE"
+}
+alias open=open-ide
+
+
+
+####################################################################################################
+#
+#                PROJECT INITIALIZATION
+#
+####################################################################################################
+
+configuration_loader() {
+   if [[ -n "$1" ]]; then 
+      PROJECT=$1;
+   else 
+      PROJECT=${PWD##*/};
+      PROJECT=${PROJECT:-/}
+   fi
+   
+   
+   if [[ -n "$2" ]]; then 
+      MAIN_MODULE=$2;
+   else 
+      MAIN_MODULE=app-web
+   fi
+
+   ${DERICON_ROOT}/cd-helpers/tools/configuration-loader/configuration-loader.sh -a $PROJECT -d $MAIN_MODULE
+}
+alias configUpdate=configuration_loader
+alias updateConfig=configuration_loader
+alias initialize=configuration_loader
+
+
+function dericlone() {
+   if [ ! -d ${DERICON_ROOT}/$1 ]; then
+    dericon
+    git clone git@${DERICON_SSH_HOST}:dericon/$1.git
+    cd $1 && git config user.email ${DERICON_COMMIT_EMAIL} && git config user.name ${DERICON_COMMIT_NAME}
+   else
+      cd ${DERICON_ROOT}/$1
+   fi
+    configuration_loader $1
+    alias $1="cd ${DERICON_ROOT}/$1"
+}
+alias clone=dericlone
+
+# Alias to create a new module in a given project that follows the reference architecture
+MODULE="./module.sh"
+alias module=$MODULE
+
+# Alias to create a new starter-module in the microservice-commons project
+STARTER_MODULE="./starter-module.sh"
+alias starter-module=$STARTER_MODULE
+
+
+
+
+
+
+####################################################################################################
+#
+#                CREATE RELEASE BRANCH WITH CORRECT VERSION
+#
+####################################################################################################
+
+
+get-version() {
+	local VERSION=$(latest-tag | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+')
+	echo $VERSION
+}
+
+create-release() {
+	echo "Create $1 release with version $2"
+	local VERSION=$2
+	local x=$(git rev-parse --abbrev-ref HEAD)
+	git stash
+	git checkout develop && git pull
+
+	local RELEASE_BRANCH="release/$VERSION"
+	cbp $RELEASE_BRANCH
+
+	git checkout $x && git stash apply
+}
+
+major() {
+	local VERSION=$(get-version)
+	local major=$(echo $VERSION | cut -d. -f1)
+	local minor=$(echo $VERSION | cut -d. -f2)
+	local patch=$(echo $VERSION | cut -d. -f3)
+
+	local updatedMajor=$((major + 1))
+	local updatedMinor=0
+	local updatedPatch=0
+
+	local UPDATED_VERSION="${updatedMajor}.${updatedMinor}.${updatedPatch}"
+	create-release "major" $UPDATED_VERSION
+}
+
+minor() {
+	local VERSION=$(get-version)
+	major=$(echo $VERSION | cut -d. -f1)
+	minor=$(echo $VERSION | cut -d. -f2)
+	patch=$(echo $VERSION | cut -d. -f3)
+
+	updatedMinor=$((minor + 1))
+	updatedPatch=0
+
+	local UPDATED_VERSION="${major}.${updatedMinor}.${updatedPatch}"
+	create-release "minor" $UPDATED_VERSION
+}
+
+patch() {
+	local VERSION=$(get-version)
+	major=$(echo $VERSION | cut -d. -f1)
+	minor=$(echo $VERSION | cut -d. -f2)
+	patch=$(echo $VERSION | cut -d. -f3)
+
+	updatedPatch=$((patch + 1))
+
+	local UPDATED_VERSION="${major}.${minor}.${updatedPatch}"
+	create-release "patch" $UPDATED_VERSION
+}
+
+
+####################################################################################################
+#
+#                AUTOMATIC COMMIT MESSAGE PREPARATION
+#
+####################################################################################################
+
+#See: https://community.atlassian.com/t5/Jira-questions/How-to-extract-jira-issue-ticket-in-bash-script/qaq-p/2005428
+get-ticket-id() {
+   BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+   
+   # Ensure BRANCH_NAME is not empty and is not in a detached HEAD state (i.e. rebase).
+   # SKIP_PREPARE_COMMIT_MSG may be used as an escape hatch to disable this hook,
+   # while still allowing other githooks to run.
+   if [ ! -z "$BRANCH_NAME" ] && [ "$BRANCH_NAME" != "HEAD" ] && [ "$SKIP_PREPARE_COMMIT_MSG" != 1 ]; then   
+      PREFIX_PATTERN='[A-Z]{2,5}-[0-9]{1,4}'    
+      [[ $BRANCH_NAME =~ $PREFIX_PATTERN ]]     
+      PREFIX=${BASH_REMATCH[0]}
+      if [[ -z "${PREFIX// }" ]]; then
+          echo ""
+      else
+      echo "${PREFIX}: "   
+      fi
+   fi
+}
+
+prepare-custom-commit-message() {
+   local MESSAGE="$@"
+   local TICKET=$(get-ticket-id)
+   local CUSTOM_PREPARED_COMMIT_MESSAGE="${TICKET}${MESSAGE}"
+   echo $CUSTOM_PREPARED_COMMIT_MESSAGE
+}
+
+do_commit() {
+   local MESSAGE=$(prepare-custom-commit-message $@)
+   git commit -m "$MESSAGE"
+}
+
+
+REPLACEMENT_COMMIT_WITH_MESSAGE_COMMAND="do_commit"
+alias cm=$REPLACEMENT_COMMIT_WITH_MESSAGE_COMMAND
+
+REPLACEMENT_ADD_COMMIT_WITH_MESSAGE_COMMAND="git add . && do_commit"
+alias acm=$REPLACEMENT_ADD_COMMIT_WITH_MESSAGE_COMMAND
+
+
+replacement-acp()
+{
+	git add . && do_commit "$@" && git fetch && git status && git push
+}
+alias acp=replacement-acp
