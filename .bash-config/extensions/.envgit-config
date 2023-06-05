@@ -1,9 +1,14 @@
 #!/bin/bash
 
 alias envgit="git --git-dir=.envgit"
-alias syncRemote="git pull sync master"
-alias pushRemote="git push sync HEAD:master"
+
 
 update-env-config() {
-    envgit pull
+    debug-log "Clean working directory"
+    envgit reset --hard
+    envgit checkout master
+    envgit pull -f
 }
+
+alias syncRemote="git pull sync master && update-env-config"
+alias pushRemote="git push sync HEAD:master"
