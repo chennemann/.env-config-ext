@@ -1,31 +1,15 @@
+# To override all or some values you should create a '.defaults' file next to this one and override the values you want.
+# Restart git-bash to see the effects
+
 ENABLE_DEBUG_LOGGING=false
 
-DEFAULT_EDITOR_COMMAND="fleet.cmd"
-DEFAULT_IDE_COMMAND="idea.cmd"
+DEFAULT_EDITOR_COMMAND="vim"
+DEFAULT_IDE_COMMAND="vim"
 
-DEFAULT_TERMINAL_TITLE="Bash > \W"
+DEFAULT_TERMINAL_TITLE="$TITLEPREFIX:$PWD"
 DEFAULT_PROMPT_HOST_SECTION="\u@\h"
-DEFAULT_PROMPT_SYSTEM_SECTION=">>"
-DEFAULT_PROMPT_INDICATOR="..."
+DEFAULT_PROMPT_SYSTEM_SECTION="$MSYSTEM"
+DEFAULT_PROMPT_INDICATOR="$"
 
 ENABLE_SSH_AGENT_SPAWNING=true
 DEFAULT_SSH_KEY_DIRECTORY="${HOME}/.ssh/identities"
-
-
-##########################################################
-#                                                        #
-#                EXTENSIONS CONFIGURATION                #
-#                                                        #
-##########################################################
-
-DERICON_ROOT="/d/Development/dericon"
-DERICON_COMMIT_EMAIL="christoph.hennemann@dericon.de"
-DERICON_COMMIT_NAME="chennemann"
-DERICON_SSH_HOST="work.bitbucket.org"
-
-
-# Override .defaults with .local-defauls if they exist to enable machine-local configurations
-LOCAL_DEFAULTS_FILE_PATH=$HOME/.bash-config/.local-defaults
-if test -f $LOCAL_DEFAULTS_FILE_PATH; then
-	. $LOCAL_DEFAULTS_FILE_PATH
-fi
