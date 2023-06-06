@@ -19,6 +19,7 @@ DEFAULT_SSH_KEY_DIRECTORY="${HOME}/.ssh/identities"
 ##########################################################
 
 DERICON_ROOT="/d/Development/dericon"
+CD_HELPER_ROOT="$DERICON_ROOT/cd-helpers"
 DERICON_COMMIT_EMAIL="christoph.hennemann@dericon.de"
 DERICON_COMMIT_NAME="chennemann"
 DERICON_SSH_HOST="work.bitbucket.org"

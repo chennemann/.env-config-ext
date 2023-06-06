@@ -15,21 +15,21 @@ open-wt-tab() {
 }
 
 jenkins() {
-   open-wt-tab "${DERICON_ROOT}/cd-helpers/tools/build-jenkins/establish_ssh_tunnel_build_jenkins.sh" Jenkins
+   open-wt-tab "${CD_HELPER_ROOT}/tools/build-jenkins/establish_ssh_tunnel_build_jenkins.sh" Jenkins
 }
 
 rundeck-cron() {
-   open-wt-tab "${DERICON_ROOT}/cd-helpers/tools/rundeck/establish_ssh_tunnel_rundeck_cron_prod.sh" Cron:PROD
+   open-wt-tab "${CD_HELPER_ROOT}/tools/rundeck/establish_ssh_tunnel_rundeck_cron_prod.sh" Cron:PROD
 }
 alias cron=rundeck-cron
 
 rundeck-cron-test() {
-   open-wt-tab "${DERICON_ROOT}/cd-helpers/tools/rundeck/establish_ssh_tunnel_rundeck_cron_test.sh" Cron:TEST
+   open-wt-tab "${CD_HELPER_ROOT}/tools/rundeck/establish_ssh_tunnel_rundeck_cron_test.sh" Cron:TEST
 }
 alias cron-test=rundeck-cron-test
 
 rundeck() {
-   open-wt-tab "${DERICON_ROOT}/cd-helpers/tools/rundeck/establish_ssh_tunnel_rundeck_deployment.sh" Deployment
+   open-wt-tab "${CD_HELPER_ROOT}/tools/rundeck/establish_ssh_tunnel_rundeck_deployment.sh" Deployment
 }
 alias deploy=rundeck
 
@@ -40,7 +40,7 @@ ssh_eureka() {
       PROJECT=${PWD##*/};
       PROJECT=${PROJECT:-/}
    fi
-   wt --title="ssh > $PROJECT" --suppressApplicationTitle "C:\Program Files\Git\bin\bash.exe" -li -c "${DERICON_ROOT}/cd-helpers/tools/eureka-ssh-client/eureka-ssh-client.sh -e $1 -a $PROJECT"
+   wt --title="ssh > $PROJECT" --suppressApplicationTitle "C:\Program Files\Git\bin\bash.exe" -li -c "${CD_HELPER_ROOT}/tools/eureka-ssh-client/eureka-ssh-client.sh -e $1 -a $PROJECT"
 }
 
 connect() {   
@@ -125,7 +125,7 @@ configuration_loader() {
       MAIN_MODULE=app-web
    fi
 
-   ${DERICON_ROOT}/cd-helpers/tools/configuration-loader/configuration-loader.sh -a $PROJECT -d $MAIN_MODULE
+   ${CD_HELPER_ROOT}/tools/configuration-loader/configuration-loader.sh -a $PROJECT -d $MAIN_MODULE
 }
 alias configUpdate=configuration_loader
 alias updateConfig=configuration_loader
@@ -133,15 +133,21 @@ alias initialize=configuration_loader
 
 
 function dericlone() {
-   if [ ! -d ${DERICON_ROOT}/$1 ]; then
-    dericon
+   if [[ ! -z "${2// }" ]]; then
+      CLONE_PATH="$DERICON_ROOT/$2"
+   else
+      CLONE_PATH=$DERICON_ROOT
+   fi
+
+   if [ ! -d ${CLONE_PATH}/$1 ]; then
+    cd $CLONE_PATH
     git clone git@${DERICON_SSH_HOST}:dericon/$1.git
     cd $1 && git config user.email ${DERICON_COMMIT_EMAIL} && git config user.name ${DERICON_COMMIT_NAME}
    else
-      cd ${DERICON_ROOT}/$1
+      cd ${CLONE_PATH}/$1
    fi
     configuration_loader $1
-    alias $1="cd ${DERICON_ROOT}/$1"
+    alias $1="cd ${CLONE_PATH}/$1"
 }
 alias clone=dericlone
 
