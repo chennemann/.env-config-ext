@@ -289,4 +289,4 @@ replacement-acp()
 }
 alias acp=replacement-acp
 
-alias dericon-alias="edit $HOME/.bash-config/extensions/.dericon-alias-config"
+alias daka="edit $HOME/.bash-config/extensions/.dericon-alias-config"
