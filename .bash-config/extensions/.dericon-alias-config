@@ -11,7 +11,9 @@ open-wt-tab() {
    else 
       TITLE=""
    fi
-   wt -w _quake $TITLE "C:\Program Files\Git\bin\bash.exe" -li -c $COMMAND
+   wt nt $TITLE "C:\Program Files\Git\bin\bash.exe" -lic '"'$COMMAND'" &'
+   wt nt -d $PWD
+   exit
 }
 
 jenkins() {

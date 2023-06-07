@@ -21,3 +21,5 @@ alias edit=editor
 
 alias ls="ls -a"
 alias paka="edit $HOME/.bash-config/extensions/.private-alias-config"
+
+alias install="run install"
