@@ -178,20 +178,28 @@ get-version() {
 	echo $VERSION
 }
 
+prepare-release() {
+   if [[ -n $(git status -s) ]]; then
+      echo ""
+      echo "Stashing untracked changes in Working Tree"
+      echo ""
+      git stash --include-untracked
+   fi
+	git checkout develop && git pull
+}
+
 create-release() {
 	echo "Create $1 release with version $2"
 	local VERSION=$2
-	local x=$(git rev-parse --abbrev-ref HEAD)
-	git stash
-	git checkout develop && git pull
 
 	local RELEASE_BRANCH="release/$VERSION"
 	cbp $RELEASE_BRANCH
-
-	git checkout $x && git stash apply
+   rmg
+   git checkout develop
 }
 
 major() {
+   prepare-release
 	local VERSION=$(get-version)
 	local major=$(echo $VERSION | cut -d. -f1)
 	local minor=$(echo $VERSION | cut -d. -f2)
@@ -206,6 +214,7 @@ major() {
 }
 
 minor() {
+   prepare-release
 	local VERSION=$(get-version)
 	major=$(echo $VERSION | cut -d. -f1)
 	minor=$(echo $VERSION | cut -d. -f2)
@@ -219,6 +228,7 @@ minor() {
 }
 
 patch() {
+   prepare-release
 	local VERSION=$(get-version)
 	major=$(echo $VERSION | cut -d. -f1)
 	minor=$(echo $VERSION | cut -d. -f2)
