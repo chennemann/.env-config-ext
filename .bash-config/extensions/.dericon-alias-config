@@ -37,12 +37,13 @@ alias deploy=rundeck
 
 ssh_eureka() {
    if [[ -n "$2" ]]; then 
-      PROJECT=$2;
+      local PROJECT=$2;
    else 
       PROJECT=${PWD##*/};
       PROJECT=${PROJECT:-/}
    fi
-   wt --title="ssh > $PROJECT" --suppressApplicationTitle "C:\Program Files\Git\bin\bash.exe" -li -c "${CD_HELPER_ROOT}/tools/eureka-ssh-client/eureka-ssh-client.sh -e $1 -a $PROJECT"
+   local ENV_NAME=${1^^}
+   wt --title="ssh ($ENV_NAME) > $PROJECT" --suppressApplicationTitle "C:\Program Files\Git\bin\bash.exe" -li -c "${CD_HELPER_ROOT}/tools/eureka-ssh-client/eureka-ssh-client.sh -e $1 -a $PROJECT"
 }
 
 connect() {   
