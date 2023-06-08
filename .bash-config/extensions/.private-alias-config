@@ -40,3 +40,9 @@ create-project-shortcuts() {
    done
 }
 create-project-shortcuts
+
+delete-remote-branch() {
+   echo "Deleting $1"
+   git push origin --delete $1
+}
+
