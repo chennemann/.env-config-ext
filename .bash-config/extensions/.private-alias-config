@@ -41,6 +41,27 @@ create-project-shortcuts() {
 }
 create-project-shortcuts
 
+
+check-for-changes() {
+   echo "Check for Untracked Changes"
+   for dir in "${PROJECT_ROOTS[@]}"; do
+      if [ -d "$dir" ]; then
+         for path in ${dir}/*/; do
+            if [ -d "$path" ]; then
+               cd $path
+               if [[ -d "$path/.git/" ]]; then
+                  if [[ -n $(git status --porcelain -s) ]]; then
+                     echo "‎ -> Untracked Changes in $(basename $path)"
+                  fi      
+               fi         
+            fi
+         done
+      fi
+   done
+}
+create-project-shortcuts
+
+
 delete-remote-branch() {
    echo "Deleting $1"
    git push origin --delete $1
