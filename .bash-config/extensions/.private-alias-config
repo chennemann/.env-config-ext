@@ -2,11 +2,6 @@ AC_ANDROID="studio.cmd"
 alias android=$AC_ANDROID
 alias studio=$AC_ANDROID
 
-chennemann() {
-   cd /d/development/chennemann/$1
-}
-alias private=chennemann
-
 
 # Alias to fix permission of the gradle wrapper in a given project
 function fix-permission() {
@@ -23,3 +18,25 @@ alias ls="ls -a"
 alias paka="edit $HOME/.bash-config/extensions/.private-alias-config"
 
 alias install="run install"
+
+create-project-shortcuts() {
+   for dir in "${PROJECT_ROOTS[@]}"; do
+      if [ -d "$dir" ]; then
+
+         alias $(basename $dir)="cd $dir"
+
+         for path in ${dir}/*/; do
+            if [ -d "$path" ]; then
+               local dirname=$path
+               local result="${dirname%"${dirname##*[!/]}"}"
+               result="${result##*/}"
+               result=${result:-/}
+               
+               alias $result="cd $path"
+               
+            fi
+         done
+      fi
+   done
+}
+create-project-shortcuts

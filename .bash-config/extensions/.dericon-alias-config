@@ -66,24 +66,6 @@ alias prod=connect-prod
 #
 ####################################################################################################
 
-dericon() {
-   cd ${DERICON_ROOT}/$1
-}
-
-create-dericon-project-shortcuts() {
-    for path in ${DERICON_ROOT}/*/; do
-        if [ -d "$path" ]; then
-             local dirname=$path
-             local result="${dirname%"${dirname##*[!/]}"}"
-             result="${result##*/}"
-             result=${result:-/}
-             
-             alias $result="cd $path"
-        fi
-    done
-}
-create-dericon-project-shortcuts
-
 function open-ide() {
    if [[ -n "$1" ]]; then
       if [ -d "$1" ]; then
@@ -239,6 +221,36 @@ patch() {
 
 	local UPDATED_VERSION="${major}.${minor}.${updatedPatch}"
 	create-release "patch" $UPDATED_VERSION
+}
+
+prepare-hotfix() {
+   if [[ -n $(git status -s) ]]; then
+      echo ""
+      echo "Stashing untracked changes in Working Tree"
+      echo ""
+      git stash --include-untracked
+   fi
+	git checkout master && git pull
+}
+
+create-hotfix() {
+	local TICKET_ID=$1
+
+	local HOTFIX_BRANCH="hotfix/$TICKET_ID-adjustments"
+	cbp $HOTFIX_BRANCH
+}
+
+hotfix() {
+   prepare-hotfix
+   
+   local PREFIX_PATTERN='[A-Z]{2,5}-[0-9]{1,4}'    
+   [[ $1 =~ $PREFIX_PATTERN ]]     
+   local TICKET_ID=${BASH_REMATCH[0]}
+   if [[ ! -z "${TICKET_ID// }" ]]; then
+      echo "You have to specify the ticket Id for the hotfix"
+      exit 1
+   fi
+	create-hotfix $HOTFIX_VERSION $1 $DESCRIPTION
 }
 
 
