@@ -14,7 +14,7 @@ alias explorer="start ."
 
 alias edit=editor
 
-alias ls="ls -a"
+alias ls="ls -1A --group-directories-first --color"
 alias paka="edit $HOME/.bash-config/extensions/.private-alias-config"
 
 alias install="run install"
