@@ -1,0 +1,14 @@
+    WARNING: ` (U+0060) is already defined more than once on the keyboard (on VK_0, ShiftState 'Ctl+Alt' and VK_0, ShiftState 'Shift').
+    WARNING: ´ (U+00b4) is already defined more than once on the keyboard (on VK_9, ShiftState 'Ctl+Alt' and VK_9, ShiftState 'Shift').
+    WARNING: ! (U+0021) is already defined more than once on the keyboard (on VK_OEM_PLUS, ShiftState 'Base' and VK_1, ShiftState 'Shift').
+    WARNING: ' (U+0027) is already defined more than once on the keyboard (on VK_OEM_MINUS, ShiftState 'Shift' and VK_OEM_1, ShiftState 'Ctl+Alt').
+    WARNING: ß (U+00df) is already defined more than once on the keyboard (on VK_OEM_MINUS, ShiftState 'Ctl+Alt' and VK_OEM_PLUS, ShiftState 'Ctl+Alt').
+    WARNING: & (U+0026) is already defined more than once on the keyboard (on VK_OEM_2, ShiftState 'Ctl+Alt' and VK_6, ShiftState 'Shift').
+    WARNING: ^ (U+005e) is already defined more than once on the keyboard (on VK_OEM_3, ShiftState 'Base' and VK_7, ShiftState 'Shift').
+    WARNING: ? (U+003f) is already defined more than once on the keyboard (on VK_OEM_4, ShiftState 'Ctl+Alt' and VK_OEM_MINUS, ShiftState 'Base').
+    WARNING: ! (U+0021) is already defined more than once on the keyboard (on VK_OEM_4, ShiftState 'Shift+Ctl+Alt' and VK_1, ShiftState 'Shift').
+    WARNING: # (U+0023) is already defined more than once on the keyboard (on VK_OEM_6, ShiftState 'Ctl+Alt' and VK_OEM_PLUS, ShiftState 'Shift').
+    WARNING: * (U+002a) is already defined more than once on the keyboard (on VK_OEM_7, ShiftState 'Ctl+Alt' and VK_8, ShiftState 'Shift').
+    WARNING: ? (U+003f) is already defined more than once on the keyboard (on VK_OEM_7, ShiftState 'Shift+Ctl+Alt' and VK_OEM_MINUS, ShiftState 'Base').
+    WARNING: '<' defined on OEM_102 (Base) but not defined elsewhere. This key may not be present on all keyboards.
+    WARNING: '>' defined on OEM_102 (Shift) but not defined elsewhere. This key may not be present on all keyboards.
