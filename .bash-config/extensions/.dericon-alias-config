@@ -135,6 +135,7 @@ function dericlone() {
     alias $1="cd ${CLONE_PATH}/$1"
 }
 alias clone=dericlone
+alias broker=derifin-broker
 
 # Alias to create a new module in a given project that follows the reference architecture
 MODULE="./module.sh"
@@ -314,4 +315,60 @@ replacement-acp()
 }
 alias acp=replacement-acp
 
+
+incorporate-feedback()
+{
+   replacement-acp "Incorporate Pull Request Feedback"
+}
+
+
+merge-upstream-changes()
+{
+   replacement-acp "Merge Upstream Changes"
+}
+alias upstream=merge-upstream-changes
+
+
+dependencies()
+{
+   if [[ ! -z "${1// }" ]]; then
+      SELECTED_DEPENDENCIES_ROOT="$1"
+   else
+      SELECTED_DEPENDENCIES_ROOT="app-web"
+   fi
+   run :$SELECTED_DEPENDENCIES_ROOT:dependencies
+}
+
 alias daka="edit $HOME/.bash-config/extensions/.dericon-alias-config"
+
+
+function setMavenLocal() { 
+    VARIABLE=$1
+
+    if [[ "$VARIABLE" != "true" && "$VARIABLE" != "false" ]]
+    then
+        echo "Usage: $0 {true|false}"
+        return 1
+    fi
+
+    GIT_ROOT=$(git rev-parse --show-toplevel 2>/dev/null)
+
+    if [[ "$?" -ne 0 ]]
+    then
+        echo "Not in a git repository. Exiting..."
+        return 1
+    fi
+
+    REPO_PROP_FILE="$GIT_ROOT/repositories.properties"
+
+    if [[ -f $REPO_PROP_FILE ]]
+    then
+        echo "includeMavenLocal=$VARIABLE" > $REPO_PROP_FILE
+    else
+        echo "includeMavenLocal=$VARIABLE" > $REPO_PROP_FILE
+    fi
+}
+alias includeMavenLocal='setMavenLocal true'
+alias excludeMavenLocal='setMavenLocal false'
+
+alias localInstall='run publishToMavenLocal'

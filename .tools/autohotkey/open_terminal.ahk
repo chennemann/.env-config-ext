@@ -29,4 +29,4 @@
 }
 
 ; Hotkey to use Ctrl+Shift+C to launch/restore the Windows Terminal.
-^!p::SwitchToWindowsTerminal()
+^!End::SwitchToWindowsTerminal()

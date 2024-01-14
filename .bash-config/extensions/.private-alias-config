@@ -44,6 +44,7 @@ create-project-shortcuts
 
 check-for-changes() {
    echo "Check for Untracked Changes"
+   current_path=$PWD
    for dir in "${PROJECT_ROOTS[@]}"; do
       if [ -d "$dir" ]; then
          for path in ${dir}/*/; do
@@ -51,13 +52,16 @@ check-for-changes() {
                cd $path
                if [[ -d "$path/.git/" ]]; then
                   if [[ -n $(git status --porcelain -s) ]]; then
-                     echo "‎ -> Untracked Changes in $(basename $path)"
+                     echo "‎ -> Untracked Changes in $(basename $path):"
+                     git status --porcelain | sed 's/^/        /'
+                     echo ""
                   fi      
                fi         
             fi
          done
       fi
    done
+   cd $current_path
 }
 create-project-shortcuts
 
@@ -67,3 +71,12 @@ delete-remote-branch() {
    git push origin --delete $1
 }
 
+
+
+
+download-movie()
+{
+   if [[ ! -z "${1// }" ]]; then
+      sh ~/Downloads/dwhelper/dl.sh -n $1 -f $1
+   fi
+}
