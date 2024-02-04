@@ -53,6 +53,27 @@ check-for-changes() {
                if [[ -d "$path/.git/" ]]; then
                   if [[ -n $(git status --porcelain -s) ]]; then
                      echo "‎ -> Untracked Changes in $(basename $path):"
+                  fi      
+               fi         
+            fi
+         done
+      fi
+   done
+   cd $current_path
+}
+
+
+check-for-changes-verbose() {
+   echo "Check for Untracked Changes"
+   current_path=$PWD
+   for dir in "${PROJECT_ROOTS[@]}"; do
+      if [ -d "$dir" ]; then
+         for path in ${dir}/*/; do
+            if [ -d "$path" ]; then
+               cd $path
+               if [[ -d "$path/.git/" ]]; then
+                  if [[ -n $(git status --porcelain -s) ]]; then
+                     echo "‎ -> Untracked Changes in $(basename $path):"
                      git status --porcelain | sed 's/^/        /'
                      echo ""
                   fi      
@@ -63,7 +84,6 @@ check-for-changes() {
    done
    cd $current_path
 }
-create-project-shortcuts
 
 
 delete-remote-branch() {

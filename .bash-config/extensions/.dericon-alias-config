@@ -117,6 +117,18 @@ alias updateConfig=configuration_loader
 alias initialize=configuration_loader
 
 
+run_configuration_generator() {
+   if [[ -n "$1" ]]; then 
+      PROJECT=$1;
+   else 
+      PROJECT=${PWD##*/};
+      PROJECT=${PROJECT:-/}
+   fi
+
+   ${CD_HELPER_ROOT}/tools/run-configuration-generator/run-configuration-generator.sh $PROJECT
+}
+
+
 function dericlone() {
    if [[ ! -z "${2// }" ]]; then
       CLONE_PATH="$DERICON_ROOT/$2"
@@ -132,6 +144,7 @@ function dericlone() {
       cd ${CLONE_PATH}/$1
    fi
     configuration_loader $1
+    run_configuration_generator $1
     alias $1="cd ${CLONE_PATH}/$1"
 }
 alias clone=dericlone
@@ -140,10 +153,6 @@ alias broker=derifin-broker
 # Alias to create a new module in a given project that follows the reference architecture
 MODULE="./module.sh"
 alias module=$MODULE
-
-# Alias to create a new starter-module in the microservice-commons project
-STARTER_MODULE="./starter-module.sh"
-alias starter-module=$STARTER_MODULE
 
 
 
@@ -329,7 +338,7 @@ merge-upstream-changes()
 alias upstream=merge-upstream-changes
 
 
-dependencies()
+check-dependencies()
 {
    if [[ ! -z "${1// }" ]]; then
       SELECTED_DEPENDENCIES_ROOT="$1"
@@ -372,3 +381,4 @@ alias includeMavenLocal='setMavenLocal true'
 alias excludeMavenLocal='setMavenLocal false'
 
 alias localInstall='run publishToMavenLocal'
+alias publish='run publishToMavenLocal'
