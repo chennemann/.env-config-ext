@@ -100,3 +100,5 @@ download-movie()
       sh ~/Downloads/dwhelper/dl.sh -n $1 -f $1
    fi
 }
+
+alias obsidian='cd //diskstation/PersonalCloud/ObsidianSync/Notes'

@@ -1,5 +1,9 @@
 [core]
 	autocrlf = true
+	excludesfile = C:/Users/chris/.tools/.global.gitignore
 [user]
 	name = Christoph Hennemann
 	email = christoph.hennemann@gmail.com
+[safe]
+	directory = %(prefix)///diskstation/PersonalCloud/ObsidianSync
+	directory = %(prefix)///diskstation/PersonalCloud/ObsidianSync/Notes

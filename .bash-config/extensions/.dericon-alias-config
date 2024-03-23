@@ -144,7 +144,6 @@ function dericlone() {
       cd ${CLONE_PATH}/$1
    fi
     configuration_loader $1
-    run_configuration_generator $1
     alias $1="cd ${CLONE_PATH}/$1"
 }
 alias clone=dericlone
@@ -325,6 +324,13 @@ replacement-acp()
 alias acp=replacement-acp
 
 
+replacement-wip()
+{
+	git add . && do_commit "(wip) $@" && git fetch && git status && git push
+}
+alias wip=replacement-wip
+
+
 incorporate-feedback()
 {
    replacement-acp "Incorporate Pull Request Feedback"
@@ -381,4 +387,3 @@ alias includeMavenLocal='setMavenLocal true'
 alias excludeMavenLocal='setMavenLocal false'
 
 alias localInstall='run publishToMavenLocal'
-alias publish='run publishToMavenLocal'
