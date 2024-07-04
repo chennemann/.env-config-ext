@@ -102,3 +102,8 @@ download-movie()
 }
 
 alias obsidian='cd //diskstation/PersonalCloud/ObsidianSync/Notes'
+
+
+diskstation() {
+   ssh -p 45 chennemann@192.168.178.100
+}
