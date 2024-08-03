@@ -1,0 +1,27 @@
+    WARNING: € (U+20ac) is already defined more than once on the keyboard (on VK_3, ShiftState 'Ctl+Alt' and VK_3, ShiftState 'Shift').
+    WARNING: $ (U+0024) is already defined more than once on the keyboard (on VK_4, ShiftState 'Ctl+Alt' and VK_4, ShiftState 'Shift').
+    WARNING: The character ș (U+0219) exists in the entry for VK_C, ShiftState 'Ctl+Alt' of the layout table and is not in the default system code page (1252) of the German (Germany) language you specified. This may cause compatibility problems in non-Unicode applications.
+    WARNING: The character Ș (U+0218) exists in the entry for VK_C, ShiftState 'Shift+Ctl+Alt' of the layout table and is not in the default system code page (1252) of the German (Germany) language you specified. This may cause compatibility problems in non-Unicode applications.
+    WARNING: € (U+20ac) is already defined more than once on the keyboard (on VK_E, ShiftState 'Ctl+Alt' and VK_3, ShiftState 'Shift').
+    WARNING: The character ẞ (U+1e9e) exists in the entry for VK_S, ShiftState 'Shift+Ctl+Alt' of the layout table and is not in the default system code page (1252) of the German (Germany) language you specified. This may cause compatibility problems in non-Unicode applications.
+    WARNING: The character ț (U+021b) exists in the entry for VK_V, ShiftState 'Ctl+Alt' of the layout table and is not in the default system code page (1252) of the German (Germany) language you specified. This may cause compatibility problems in non-Unicode applications.
+    WARNING: The character Ț (U+021a) exists in the entry for VK_V, ShiftState 'Shift+Ctl+Alt' of the layout table and is not in the default system code page (1252) of the German (Germany) language you specified. This may cause compatibility problems in non-Unicode applications.
+    WARNING: The character ă (U+0103) exists in the entry for VK_Z, ShiftState 'Ctl+Alt' of the layout table and is not in the default system code page (1252) of the German (Germany) language you specified. This may cause compatibility problems in non-Unicode applications.
+    WARNING: The character Ă (U+0102) exists in the entry for VK_Z, ShiftState 'Shift+Ctl+Alt' of the layout table and is not in the default system code page (1252) of the German (Germany) language you specified. This may cause compatibility problems in non-Unicode applications.
+    WARNING: * (U+002a) is already defined more than once on the keyboard (on VK_OEM_1, ShiftState 'Ctl+Alt' and VK_8, ShiftState 'Shift').
+    WARNING: ! (U+0021) is already defined more than once on the keyboard (on VK_OEM_PLUS, ShiftState 'Shift' and VK_OEM_PLUS, ShiftState 'Base').
+    WARNING: ! (U+0021) is already defined more than once on the keyboard (on VK_OEM_PLUS, ShiftState 'Ctl+Alt' and VK_OEM_PLUS, ShiftState 'Base').
+    WARNING: î (U+00ee) is already defined more than once on the keyboard (on VK_OEM_COMMA, ShiftState 'Ctl+Alt' and VK_X, ShiftState 'Ctl+Alt').
+    WARNING: ß (U+00df) is already defined more than once on the keyboard (on VK_OEM_MINUS, ShiftState 'Shift' and VK_S, ShiftState 'Ctl+Alt').
+    WARNING: ß (U+00df) is already defined more than once on the keyboard (on VK_OEM_MINUS, ShiftState 'Ctl+Alt' and VK_S, ShiftState 'Ctl+Alt').
+    WARNING: ẞ (U+1e9e) is already defined more than once on the keyboard (on VK_OEM_MINUS, ShiftState 'Shift+Ctl+Alt' and VK_S, ShiftState 'Shift+Ctl+Alt').
+    WARNING: & (U+0026) is already defined more than once on the keyboard (on VK_OEM_2, ShiftState 'Ctl+Alt' and VK_6, ShiftState 'Shift').
+    WARNING: ^ (U+005e) is already defined more than once on the keyboard (on VK_OEM_3, ShiftState 'Base' and VK_7, ShiftState 'Shift').
+    WARNING: ? (U+003f) is already defined more than once on the keyboard (on VK_OEM_4, ShiftState 'Ctl+Alt' and VK_OEM_MINUS, ShiftState 'Base').
+    WARNING: ! (U+0021) is already defined more than once on the keyboard (on VK_OEM_4, ShiftState 'Shift+Ctl+Alt' and VK_OEM_PLUS, ShiftState 'Base').
+    WARNING: | (U+007c) is already defined more than once on the keyboard (on VK_OEM_5, ShiftState 'Shift+Ctl+Alt' and VK_9, ShiftState 'Ctl+Alt').
+    WARNING: # (U+0023) is already defined more than once on the keyboard (on VK_OEM_6, ShiftState 'Ctl+Alt' and VK_1, ShiftState 'Shift').
+    WARNING: '<' defined on OEM_102 (Base) but not defined elsewhere. This key may not be present on all keyboards.
+    WARNING: '>' defined on OEM_102 (Shift) but not defined elsewhere. This key may not be present on all keyboards.
+    WARNING: 'â' defined on OEM_102 (Ctl+Alt) but not defined elsewhere. This key may not be present on all keyboards.
+    WARNING: 'Â' defined on OEM_102 (Shift+Ctl+Alt) but not defined elsewhere. This key may not be present on all keyboards.

@@ -7,3 +7,4 @@
 [safe]
 	directory = %(prefix)///diskstation/PersonalCloud/ObsidianSync
 	directory = %(prefix)///diskstation/PersonalCloud/ObsidianSync/Notes
+	directory = %(prefix)///diskstation/Media/Backup/Desktop 18.06.2024/Home
