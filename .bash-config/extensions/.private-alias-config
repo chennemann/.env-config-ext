@@ -94,6 +94,91 @@ delete-remote-branch() {
 
 
 
+function set_env_version() {
+    local version=$1
+    case $version in
+        "CANCEL")
+            exit 1
+            ;;
+        "21")
+            echo "$JDK_21"
+            ;;
+        "17")
+            echo "$JDK_17"
+            ;;
+        "11")
+            echo "$JDK_11"
+            ;;
+        "8" | "1.8")
+            echo "$JDK_8"
+            ;;
+        *)
+            echo "Unknown JDK version"
+            ;;
+    esac
+}
+
+function evaluate_jdk() {
+    local jdk_version=""
+    local misc_file=".idea/misc.xml"
+
+    if [ -f "$misc_file" ]; then
+        jdk_version=$(grep -oPm1 '(?<=project-jdk-name=")[^"]+' "$misc_file")
+    fi
+
+    local env_version=""
+    if [ -n "$jdk_version" ]; then
+        env_version=$(set_env_version "$jdk_version")
+    fi
+
+    if [ -z "$env_version" ] || [ "$env_version" = "Unknown JDK version" ]; then
+        while true; do
+            read -p "Please specify the JDK version to be used (8, 11, 17, 21): " user_input
+            if [ -z "$user_input" ]; then
+                echo "CANCEL"
+                return
+            fi
+            env_version=$(set_env_version "$user_input")
+            if [ "$env_version" != "Unknown JDK version" ]; then
+                break
+            fi
+        done
+    fi
+
+    echo $env_version
+}
+
+function execute_gradle_command() {
+    if [ ! -f "gradlew" ]; then
+        echo "No gradle wrapper found -> Task execution cancelled"
+        return
+    fi
+
+    local gradle_command="$@"
+    local java_home=$(evaluate_jdk)
+    case $java_home in
+        "CANCEL")
+            echo "No JDK specified -> Task execution cancelled"
+            return
+            ;;
+        *)
+            echo "    -> using JDK @ $java_home"
+            echo ""
+            ;;
+    esac
+
+    local java_home_param=-Dorg.gradle.java.home="$java_home"
+    ./gradlew $gradle_command "$java_home_param"
+}
+
+alias build='execute_gradle_command build'
+alias rebuild='execute_gradle_command clean build'
+alias clean='execute_gradle_command clean'
+alias run="execute_gradle_command"
+
+
+
+
 download-movie()
 {
    if [[ ! -z "${1// }" ]]; then

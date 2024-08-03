@@ -1,5 +1,8 @@
-﻿; Set the tray icon to a custom icon file
-TraySetIcon "C:\Users\chris\.tools\autohotkey\gather.png"
+﻿; Retrieve the USERPROFILE environment variable
+userProfile := EnvGet("USERPROFILE")
+
+; Set the tray icon to a custom icon file
+TraySetIcon userProfile . "\.tools\autohotkey\gather.png"
 
 ; Define the zones
 zone1 := { x: 0, y: 0, width: 960, height: 704 }
@@ -7,9 +10,9 @@ zone2 := { x: 0, y: 704, width: 1920, height: 1408 }
 zone3 := { x: 1920, y: 704, width: 1920, height: 1408 }
 
 ; Define the program to be opened or moved
-gatherPath := "C:\\Users\\chris\\AppData\\Local\\Programs\\gather-electron\\Gather.exe"
+gatherPath := userProfile . "\\AppData\\Local\\Programs\\gather-electron\\Gather.exe"
 gatherTitle := "Gather Desktop"
-regionToSharePath := "C:\Users\chris\Desktop\RegionToShare.lnk"
+regionToSharePath := userProfile . "\Desktop\RegionToShare.lnk"
 regionToShareTitlePrefix := "Region to Share"
 
 ; Function to move the window to a specified zone

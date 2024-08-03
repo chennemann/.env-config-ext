@@ -1,5 +1,8 @@
-﻿; Set the tray icon to a custom icon file
-TraySetIcon "C:\Users\chris\.tools\autohotkey\terminal.png"
+﻿; Retrieve the USERPROFILE environment variable
+userProfile := EnvGet("USERPROFILE")
+
+; Set the tray icon to a custom icon file
+TraySetIcon userProfile . "\.tools\autohotkey\terminal.png"
 
 SwitchToWindowsTerminal() {
     windowHandleId := WinExist("ahk_exe WindowsTerminal.exe")
@@ -15,8 +18,8 @@ SwitchToWindowsTerminal() {
             WinMinimize("ahk_id " windowHandleId)
         } else {
             ; Put the window in focus.
-            WinActivate("ahk_id " windowHandleId)
             WinShow("ahk_id " windowHandleId)
+            WinActivate("ahk_id " windowHandleId)
         }
     } else {
         ; Else it's not already open, so launch it.

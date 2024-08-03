@@ -24,6 +24,8 @@ DERICON_COMMIT_EMAIL="christoph.hennemann@dericon.de"
 DERICON_COMMIT_NAME="chennemann"
 DERICON_SSH_HOST="work.bitbucket.org"
 
+DEFAULT_JDK_ROOT="/c/Program\ Files/Java/jdk-8/"
+
 PRIVATE_ROOT="/d/Development/private/chennemann"
 SUITE_ROOT="/d/Development/private/chennemann/suite"
 PROJECT_ROOTS=($DERICON_ROOT $PRIVATE_ROOT $SUITE_ROOT)
